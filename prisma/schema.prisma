@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ポケモン ←→ タイプ（多対多）
+
+model Pokemon {
+  id      Int     @id @default(autoincrement())
+  name    String
+  level   String
+
+  // 中間テーブルを取得する入口
+  types   PokemonType[]   // 複数のタイプを持つため配列
+}
+
+model Type {
+  id     Int      @id @default(autoincrement())
+  name   String
+
+  // pokemonsになっているのは Type から見たときに複数のポケモンを持つから
+  pokemons  PokemonType[]      
+}
+
+// 中間テーブル
+// Pokemon ←→ PokemonType ←→ Type
+model PokemonType {
+  id           Int       @id @default(autoincrement())
+  pokemonId    Int
+  typeId       Int       @map("type_id")
+
+  // Typeやpokemonを取得するリレーション定義 
+  type         Type      @relation(fields: [typeId], references: [id], onDelete: Cascade)
+  pokemon      Pokemon   @relation(fields: [pokemonId], references: [id], onDelete: Cascade)
+}
