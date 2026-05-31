@@ -6,9 +6,12 @@ import SidebarIcon from "./SidebarIcon"
 
 export default function Sidebar() {
   return (
-    // w-full h-fullはwidthとheightが100%
-    <div className="w-[250px] h-full bg-blue-800 pt-5">
-      <SidebarIcon/>
+    // h-screenはheightが100%
+    <div className="w-[250px] bg-blue-800 pt-5 h-screen">
+      <div className="ml-4.5 mb-4">
+        <SidebarIcon/>
+      </div>
+
       <ul className="h-auto">
         {SidebarData.map((value, key) => (
           <li

@@ -7,9 +7,9 @@ export const SidebarData = [
     link: "/home"
   },
   {
-    title: "図鑑",
+    title: "図鑑作成",
     icon: <LaptopChromebookIcon/>,
-    link: "/edit"
+    link: "/create"
   },
   {
     title: "タイプ",
