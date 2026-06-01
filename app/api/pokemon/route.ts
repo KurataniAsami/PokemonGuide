@@ -1,23 +1,35 @@
 import { prisma } from "@/app/libs/prisma"
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 
+// 表示
 export type PokemonResponse = {
-  pokemons: {
+  pokemons: {   // このpokemonsは型
+    id: number
     name: string
-    type: string
     level: string
-    PokemonType: {
+    types: {
       type: {
         id: number
         name: string
-      }[]
+      }
     }[]
-  }
+  }[]
+}
+
+// 作成
+export type CreatePokemonRequestBody = {
+  id: number
+  name: string
+  type: string[]
+  level: string
 }
 
 export const GET = async () => {
   try {
     // const data = await...のdetaはここからきてる
+    // このpokemonsはただの変数名
+    // findManyで複数取得するから結果はpokemon[]
+    // pokemon[]はデータの型
     const pokemons = await prisma.pokemon.findMany({
       include: {   // 関連テーブルも取得
         types: {   // types 中間テーブル取得
@@ -28,9 +40,57 @@ export const GET = async () => {
       }
     })
 
+    // { pokemons }はレスポンスのキー
+    // ここでフロントに返す
     return NextResponse.json({ pokemons }, { status: 200 })
   } catch(error) {
     if( error instanceof Error )
       return NextResponse.json({ message: error.message }, { status: 400 })
   }
+}
+
+// POST
+export const POST = async (request: NextRequest) => {
+  try {
+    const body : CreatePokemonRequestBody = await request.json()
+    
+    const { id, name, level, type } = body
+
+    // typeは中間テーブルで保存する
+    const pokemonData = await prisma.pokemon.create({
+      data: {
+        id,
+        name,
+        level
+      },
+    })
+
+    // 中間テーブルのレコード作成(PokemonとPokemon Type)
+    // フォームから取得したタイプから一致するtype idを取得
+    const typeData = await prisma.type.findMany({
+      where: {
+        name: {
+          in: type
+        }
+      }
+    })
+
+    // 取得したタイプ一覧を、中間テーブル(PokemonType) に保存
+    // createManyで複数のレコードをテーブルにINSERTする
+    await prisma.pokemonType.createMany({
+      data: typeData.map((type) => ({
+        pokemonId: Number(id),
+        typeId: type.id
+      }))
+    })
+
+    return NextResponse.json({
+      pokemonId: Number(id)
+    })
+  } catch(error) {
+    if(error instanceof Error) {
+      return NextResponse.json({ message: error.message }, { status: 400 })
+    }
+  }
+    
 }
