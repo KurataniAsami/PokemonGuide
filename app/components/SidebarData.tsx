@@ -4,7 +4,7 @@ export const SidebarData = [
   {
     title: "ポケモン一覧",
     icon: <LaptopChromebookIcon/>,
-    link: "/home"
+    link: "/"
   },
   {
     title: "図鑑作成",
@@ -17,8 +17,8 @@ export const SidebarData = [
     link: "/type"
   },
   {
-    title: "進化",
+    title: "お気に入り",
     icon: <LaptopChromebookIcon/>,
-    link: "/evolution"
+    link: "/favorite"
   },
 ]

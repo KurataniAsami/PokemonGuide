@@ -6,7 +6,7 @@ export type PokemonResponse = {
   pokemons: {   // このpokemonsは型
     id: number
     name: string
-    level: string
+    weight: number
     types: {
       type: {
         id: number
@@ -21,7 +21,7 @@ export type CreatePokemonRequestBody = {
   id: number
   name: string
   type: string[]
-  level: string
+  weight: string   // formからくるからstring, 後に変換
 }
 
 export const GET = async () => {
@@ -37,6 +37,9 @@ export const GET = async () => {
             type: true
           }
         }
+      },
+      orderBy: {
+        id: 'asc'
       }
     })
 
@@ -54,14 +57,14 @@ export const POST = async (request: NextRequest) => {
   try {
     const body : CreatePokemonRequestBody = await request.json()
     
-    const { id, name, level, type } = body
+    const { id, name, weight, type } = body
 
     // typeは中間テーブルで保存する
     const pokemonData = await prisma.pokemon.create({
       data: {
         id,
         name,
-        level
+        weight: Number(weight),   // stringからnumberに変換
       },
     })
 
@@ -74,6 +77,7 @@ export const POST = async (request: NextRequest) => {
         }
       }
     })
+    console.log("typeData:", typeData)
 
     // 取得したタイプ一覧を、中間テーブル(PokemonType) に保存
     // createManyで複数のレコードをテーブルにINSERTする
@@ -92,5 +96,4 @@ export const POST = async (request: NextRequest) => {
       return NextResponse.json({ message: error.message }, { status: 400 })
     }
   }
-    
 }
