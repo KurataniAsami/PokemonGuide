@@ -7,6 +7,7 @@ export default function CreatePage() {
   const [pokemonName, setPokemonName] = useState('')
   const [type, setType] = useState<string[]>([])
   const [weight, setWeight] = useState('')
+  const [detail, setDetail] = useState('')
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -14,15 +15,14 @@ export default function CreatePage() {
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
 
-    console.log("submit")
-
     setLoading(true)
 
     const body: CreatePokemonRequestBody = {
       id: Number(id),
       name: pokemonName,
       type,
-      weight
+      weight,
+      detail
     }
 
     try {
@@ -41,12 +41,18 @@ export default function CreatePage() {
   }
 
   const typeOptions = [
+  "ノーマル",
   "ほのお",
   "みず",
-  "くさ",
   "でんき",
+  "くさ",
+  "どく",
+  "じめん",
   "ひこう",
-  "こおり",
+  "エスパー",
+  "むし",
+  "いわ",
+  "ゴースト",
 ]
 
   return (
@@ -89,6 +95,20 @@ export default function CreatePage() {
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
               placeholder="おもさを入力"
+              className="border border-white w-72 text-base caret-white focus:outline focus:outline-white"
+              style={{
+                caretColor: "white",
+                color: "white"
+              }}
+            />
+          </div>
+
+          <div className="flex flex-col mt-3">
+            <label className="w-24 mb-1">データ</label>
+            <input
+              value={detail}
+              onChange={(e) => setDetail(e.target.value)}
+              placeholder="ポケモンのデータを入力"
               className="border border-white w-72 text-base caret-white focus:outline focus:outline-white"
               style={{
                 caretColor: "white",

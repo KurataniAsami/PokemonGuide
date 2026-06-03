@@ -4,24 +4,26 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import { PokemonResponse } from "../api/pokemon/route";
+import { PokemonIndexResponse } from "../api/pokemon/route";
 import Button from '@mui/material/Button'
-import { PokemonType } from "../types/pokemonType";
+import Box from '@mui/material/Box'
+import { PokemonList } from "../types/pokemon";
 import { typeMeta } from "../constans/typeColor";
-import Typography from '@mui/material/Typography'
+import Image from "next/image";
+import { PokemonType } from "../types/pokemonType";
 
 export default function DataListPage() {
   // const [pokemonLists, setPokemonLists] = useState<PokemonResponse[]>([])
   // "pokemons"は PokemonResponseのpokemonsプロパティからきてる（配列）
-  const [pokemonLists, setPokemonLists] = useState<PokemonResponse["pokemons"]>([])
+  // APIが返すデータをstateに入れる
+  const [pokemonLists, setPokemonLists] = useState<PokemonList[]>([])
   const [loading, setLoading] = useState(true)
 
   // レンダリングのたびにfetchを走らせないためにuseEffectを使用
   useEffect(() => {
     const getAllPokemon = async () => {
     const res = await fetch(`/api/pokemon`)
-    // const data: PokemonResponseでfetchする時だけバックエンドの型を使用
-    const data: PokemonResponse = await res.json()
+    const data: PokemonIndexResponse = await res.json()   // ここで返ってきたデータを受け取る
     setPokemonLists(data.pokemons)
     setLoading(false)
   }
@@ -29,35 +31,50 @@ export default function DataListPage() {
   getAllPokemon()
   },[])
   
-  // if(loading) return <p>loading...</p>
+  if(loading) return <p className="text-white">loading...</p>
   if(!pokemonLists) return <p>データがありません</p>
 
   return (
-    <div>
-      {/* Cardの書き方はMUI専用の書き方 */}
-      <Card
-        variant="outlined"
-        sx={{ maxWidth: 300 }}
+    <div className="ml-8">
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+        }}
       >
-        <CardContent>
-          <ul>
-            {pokemonLists.map((list) => (
-              <li key={list.id}>
-                <Link
-                  href={`/pokemon/${list.id}`}
-                >
-                <div>
-                  {list.name}
-                  <p>レベル:{list.level}</p>
-                </div>
 
-                {/* listの中で再びmap */}
-                {/* pokemonsの中のtypes */}
-                <div>
-                  {/* as PokemonTypeはこの型はPokemonTypeとして扱ってねという意味 */}
-                  {/* typesの中にtypeが入っている, それを取り出して変数typeに入れる */}
-                  {list.types.map((t) => {
+      {pokemonLists.map((list) => (
+        <Card
+          key={list.id}
+          variant="outlined"
+          sx={{
+            maxWidth: 300,
+            backgroundColor: '#ffffff',
+          }}
+        >
+          <CardContent>
+            <Link href={`/data-list/${list.id}`}>
+              <div className="mb-5">
+                <div className="">No:{list.id}</div>
+                <Image
+                  src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${list.id}.png`}
+                  alt={list.name}
+                  width={120}
+                  height={120}
+                  className="mx-auto"
+                />
+
+                <p className="text-center">{list.name}</p>
+              </div>
+
+                {/*  listの中で再びmap */}
+                {/* pokemonsの中のtypes */} 
+              <div className="flex justify-center gap-3">
+                {/* as PokemonTypeはこの型はPokemonTypeとして扱ってねという意味 */}
+                {/* typesの中にtypeが入っている, それを取り出して変数typeに入れる */}
+                {list.types.map((t) => {
                   const type = t.type.name as PokemonType
+
                   return (
                     <Button
                       key={t.type.id}
@@ -65,31 +82,29 @@ export default function DataListPage() {
                       disabled
                       sx={{
                         backgroundColor: typeMeta[type].color,
-                        color: "#00001C",
-                        mr: 1,   // margin right 1(8px)
+                        color: '#00001C',
 
-                        // disable時
-                        // 押せない、hoverしない時もtypeMeta[type]にする
                         '&.Mui-disabled': {
                           backgroundColor: typeMeta[type].color,
-                          color: "#00001C",
+                          color: '#00001C',
                         },
                       }}
                     >
-                      {/* <Typography sx={{ fontWeight: 900 }}> */}
-                        {/* {t.type.name} */}
                         {typeMeta[type].label}
-                      {/* </Typography> */}
                     </Button>
                   )
-                  })}
-                </div>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </CardContent>
-      </Card>
+                })}
+
+              </div>
+            </Link>
+          </CardContent>
+        </Card>
+        ))}
+      </Box>
     </div>
   )
 }
+
+// idとpokemon idが同じ数値
+// https://pokeapi.co/api/v2/pokemon-species/390
+// 複数のタイプ、詳細、カラーパレット増やす

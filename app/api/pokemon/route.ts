@@ -1,19 +1,10 @@
 import { prisma } from "@/app/libs/prisma"
 import { NextRequest, NextResponse } from "next/server"
+import { PokemonList } from "@/app/types/pokemon"
 
 // 表示
-export type PokemonResponse = {
-  pokemons: {   // このpokemonsは型
-    id: number
-    name: string
-    weight: number
-    types: {
-      type: {
-        id: number
-        name: string
-      }
-    }[]
-  }[]
+export type PokemonIndexResponse = {
+  pokemons: PokemonList[]
 }
 
 // 作成
@@ -21,7 +12,8 @@ export type CreatePokemonRequestBody = {
   id: number
   name: string
   type: string[]
-  weight: string   // formからくるからstring, 後に変換
+  weight: string 
+  detail: string  // formからくるからstring, 後に変換
 }
 
 export const GET = async () => {
@@ -57,16 +49,18 @@ export const POST = async (request: NextRequest) => {
   try {
     const body : CreatePokemonRequestBody = await request.json()
     
-    const { id, name, weight, type } = body
+    const { id, name, weight, type, detail } = body
 
     // typeは中間テーブルで保存する
     const pokemonData = await prisma.pokemon.create({
       data: {
         id,
         name,
-        weight: Number(weight),   // stringからnumberに変換
+        weight: Number(weight),  // stringからnumberに変換
+        detail,   
       },
     })
+    
 
     // 中間テーブルのレコード作成(PokemonとPokemon Type)
     // フォームから取得したタイプから一致するtype idを取得

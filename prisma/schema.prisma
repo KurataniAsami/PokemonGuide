@@ -7,22 +7,23 @@ datasource db {
 }
 
 model Pokemon {
-  id    Int           @id @default(autoincrement())
-  name  String
-  weight Int
-  types PokemonType[]
+  id      Int           @id @default(autoincrement())
+  name    String
+  weight  Int
+  detail  String @default("")
+  types   PokemonType[]
 }
 
 model Type {
-  id       Int           @id @default(autoincrement())
-  name     String
-  pokemons PokemonType[]
+  id        Int           @id @default(autoincrement())
+  name      String
+  pokemons  PokemonType[]
 }
 
 model PokemonType {
-  id        Int     @id @default(autoincrement())
-  pokemonId Int
-  typeId    Int     @map("type_id")
-  pokemon   Pokemon @relation(fields: [pokemonId], references: [id], onDelete: Cascade)
-  type      Type    @relation(fields: [typeId], references: [id], onDelete: Cascade)
+  id          Int     @id @default(autoincrement())
+  pokemonId   Int
+  typeId      Int     @map("type_id")
+  pokemon     Pokemon @relation(fields: [pokemonId], references: [id], onDelete: Cascade)
+  type        Type    @relation(fields: [typeId], references: [id], onDelete: Cascade)
 }
