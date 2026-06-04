@@ -2,11 +2,6 @@ import { prisma } from "@/app/libs/prisma"
 import { NextRequest, NextResponse } from "next/server"
 import { PokemonList } from "@/app/types/pokemon"
 
-// 表示
-export type PokemonIndexResponse = {
-  pokemons: PokemonList[]
-}
-
 // 作成
 export type CreatePokemonRequestBody = {
   id: number
@@ -16,28 +11,64 @@ export type CreatePokemonRequestBody = {
   detail: string  // formからくるからstring, 後に変換
 }
 
-export const GET = async () => {
+// 表示
+export type PokemonIndexResponse = {
+  pokemons: PokemonList[]
+}
+
+export const GET = async (request: NextRequest) => {
+
+  const { searchParams } = new URL(request.url)
+  const page = Number(searchParams.get("page") ?? 1)
+  const limit = Number(searchParams.get("limit") ?? 6)
+
+  // 検索の開始位置を取得
+  const skip = (page -1) * limit;
+
   try {
     // const data = await...のdetaはここからきてる
     // このpokemonsはただの変数名
     // findManyで複数取得するから結果はpokemon[]
     // pokemon[]はデータの型
+
+    // const pokemons = await prisma.pokemon.findMany({
+    //   include: {   // 関連テーブルも取得
+    //     types: {   // types 中間テーブル取得
+    //       include: {
+    //         type: true
+    //       }
+    //     }
+    //   },
+    //   orderBy: {
+    //     id: 'asc'
+    //   }
+    // })
+
     const pokemons = await prisma.pokemon.findMany({
-      include: {   // 関連テーブルも取得
-        types: {   // types 中間テーブル取得
+      skip,
+      take: limit,
+      include: {
+        types: {
           include: {
             type: true
           }
         }
-      },
-      orderBy: {
-        id: 'asc'
       }
     })
 
+    const totalPokemons = await prisma.pokemon.count()
+
+    const totalPages = Math.ceil(totalPokemons / limit)
+
+
     // { pokemons }はレスポンスのキー
     // ここでフロントに返す
-    return NextResponse.json({ pokemons }, { status: 200 })
+    return NextResponse.json({
+      pokemons,
+      totalPokemons,
+      page,
+      totalPages,
+      }, { status: 200 });
   } catch(error) {
     if( error instanceof Error )
       return NextResponse.json({ message: error.message }, { status: 400 })
