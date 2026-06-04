@@ -25,14 +25,6 @@ export const typeMeta: Record<PokemonType, {
     color: "#A8A878",
     label: "ノーマル",
   },
-  こおり: {
-    color: "#98D8D8",
-    label: "こおり",
-  },
-  かくとう: {
-    color: "#C03028",
-    label: "かくとう",
-  },
   どく: {
     color: "#A040A0",
     label: "どく",
@@ -42,7 +34,7 @@ export const typeMeta: Record<PokemonType, {
     label: "じめん",
   },
   ひこう: {
-    color: "#A890F0",
+    color: "#A7D8FF",
     label: "ひこう",
   },
   エスパー: {
@@ -60,21 +52,5 @@ export const typeMeta: Record<PokemonType, {
   ゴースト: {
     color: "#705898",
     label: "ゴースト",
-  },
-  ドラゴン: {
-    color: "#7038F8",
-    label: "ドラゴン",
-  },
-  あく: {
-    color: "#705848",
-    label: "あく",
-  },
-  はがね: {
-    color: "#B8B8D0",
-    label: "はがね",
-  },
-  フェアリー: {
-    color: "#EE99AC",
-    label: "フェアリー",
   },
 }

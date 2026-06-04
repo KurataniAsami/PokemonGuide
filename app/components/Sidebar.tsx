@@ -6,8 +6,8 @@ import SidebarIcon from "./SidebarIcon"
 
 export default function Sidebar() {
   return (
-    // h-screenはheightが100%
-    <div className="w-[250px] bg-blue-800 pt-5 h-screen">
+    // min-h-screenはheightが100%
+    <div className="w-[250px] bg-blue-800 pt-5 min-h-screen">
       <div className="ml-4.5 mb-4">
         <SidebarIcon/>
       </div>
