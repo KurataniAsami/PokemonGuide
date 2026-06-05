@@ -2,7 +2,6 @@
 
 import { useParams } from "next/navigation"
 import { PokemonShowResponse } from "@/app/api/pokemon/[id]/route"
-import { Pokemon } from "@/app/types/pokemon";
 import { useEffect, useState } from "react";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -52,7 +51,7 @@ export default function PokemonDetailPage() {
         }}
       >
         <CardContent>
-          <div className="mb-5">
+          <div className="mb-4">
             
             <Image
               src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
@@ -81,7 +80,7 @@ export default function PokemonDetailPage() {
                       sx={{
                         backgroundColor: typeMeta[type].color,
                         color: '#00001C',
-                        padding: '4px',
+                        marginTop: '4px',
 
                         '&.Mui-disabled': {
                           backgroundColor: typeMeta[type].color,
@@ -97,15 +96,16 @@ export default function PokemonDetailPage() {
                 )
               })}
 
-              <p>おもさ: {pokemon.weight}kg</p>
+              <p className="mt-2">おもさ: {pokemon.weight}kg</p>
             </div>
           </div>
-          <div className="border border-gray-400 w-fit mx-auto mt-5 p-3">
+          <div className="border border-gray-400 w-fit mx-auto mt-5 p-3 rounded">
             <p>特徴: {pokemon.detail}</p>
           </div>
         </CardContent>
       </Card>
     </div>
   )
-
 }
+
+// 進化系表示

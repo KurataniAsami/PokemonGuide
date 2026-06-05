@@ -38,7 +38,7 @@ export default function TypeList() {
       {Object.entries(typeMeta).map(([type, meta]) => (
         <Link
           key={type}
-          href={`/pokemon-type/${type}`}
+          href={`/pokemonType/${type}`}
         >
           <Card
             className="w-[180px] h-[140px] rounded-sm"
