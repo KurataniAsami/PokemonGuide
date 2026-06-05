@@ -9,11 +9,16 @@ export type PokemonList = {
         name: string
       }
     }[]
-  }
+}
 
 // 一覧
 export type PokemonIndexResponse = {
   pokemons: PokemonList[]     
+
+  // ページネーション
+  totalPokemons: number
+  page: number
+  totalPages: number
 }
 
 // 表示用（詳細）とAPI用の型
@@ -33,4 +38,9 @@ export type Pokemon = {
 // 詳細
 export type PokemonShowResponse = {
   pokemon: Pokemon
+}
+
+// タイプ別表示
+export type TypeIndexResponse = {
+  pokemontypes : PokemonList[]   // pokemontypesはAPIの方とあわせる
 }
