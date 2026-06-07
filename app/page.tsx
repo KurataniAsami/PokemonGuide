@@ -6,7 +6,7 @@ export default function Home() {
     <div className="w-full">
       <div className="flex justify-center gap-5 my-5">
         <SidebarIcon/>
-        <p className="text-white">ポケモン図鑑</p>
+        <p className="text-2xl">ポケモン図鑑</p>
       </div>
 
       <DataList/>

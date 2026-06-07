@@ -2,14 +2,19 @@ import LaptopChromebookIcon from '@mui/icons-material/LaptopChromebook';
 
 export const SidebarData = [
   {
-    title: "ポケモン検索",
+    title: "ポケモン一覧",
     icon: <LaptopChromebookIcon/>,
     link: "/"
   },
   {
+    title: "ポケモン検索",
+    icon: <LaptopChromebookIcon/>,
+    link: "/search"
+  },
+  {
     title: "タイプ",
     icon: <LaptopChromebookIcon/>,
-    link: "/type"
+    link: "/pokemonType"
   },
   {
     title: "図鑑作成",
