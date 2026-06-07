@@ -4,7 +4,14 @@ import { useSearchParams, useRouter } from "next/navigation"
 import { useState } from "react";
 import SidebarIcon from "./SidebarIcon";
 
-export default function SearchAndNavigation() {
+// モーダルだけ別のcssにするのでpropsで渡す
+type ModalProps = {
+  isModal?: boolean
+}
+
+export default function SearchAndNavigation({
+    isModal = false,
+  }: ModalProps) {
   // ルーターと検索パラメーターを使用
   const router = useRouter();
 
@@ -30,23 +37,34 @@ export default function SearchAndNavigation() {
     <div className="flex justify-center p-6 mb-8">
       <form onSubmit={handleSearch}>
         <div className="flex flex-col gap-2">
-          <div className="flex gap-3 items-center">
+
+          {/* isModalがfalseの場合表示 */}
+          {!isModal && (
+            <div className="flex justify-center gap-3 items-center">
             <SidebarIcon/>
             <div>フリーワード</div>
           </div>
+          )}
 
           <div className="mt-5">
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="キーワードを入力してください"
-              className="px-3 py-2 border border-gray-400 rounded-md
-                focus:outline-none focus:ring-2 focus:ring-white text-white w-[250px]"
+              placeholder="名前で探す"
+              // modalで適用させたい方が : より前
+              className={`
+                px-3 py-2 border border-gray-400 rounded-md
+                focus:outline-none focus:ring-2   w-[250px]
+                ${isModal ? "text-black focus:ring-black" : "text-white focus:ring-white"}
+              `}
             />
             <button
               type="submit"
-              className="bg-white text-black px-4 py-2 rounded hover:bg-gray-300 ml-3"
+              className={`
+                  px-4 py-2 rounded hover:bg-gray-300 ml-3  text-black
+                ${isModal ? "bg-gray-200 mt-3" : "bg-white mt-2"}
+              `}
             >
               検索
             </button>
@@ -56,7 +74,10 @@ export default function SearchAndNavigation() {
               <button
                 type="button"
                 onClick={clearSearch}
-                className="bg-white text-black px-4 py-2 rounded hover:bg-gray-300 ml-3"
+                className={`
+                  px-4 py-2 rounded hover:bg-gray-300 ml-3  text-black
+                ${isModal ? "bg-gray-200 mt-3" : "bg-white mt-2"}
+              `}
               >
                 クリア
               </button>
