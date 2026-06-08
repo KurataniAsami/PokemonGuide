@@ -115,11 +115,11 @@ export const POST = async (request: NextRequest) => {
     // })
 
     await prisma.pokemonType.createMany({
-  data: typeData.map((item: { id: number; name: string }) => ({
-    pokemonId: Number(id),
-    typeId: item.id
-  }))
-})
+      data: typeData.map((item: { id: number; name: string }) => ({
+        pokemonId: Number(id),
+        typeId: item.id
+      }))
+    })
 
     return NextResponse.json({
       pokemonId: Number(id)
