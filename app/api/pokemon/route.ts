@@ -107,12 +107,19 @@ export const POST = async (request: NextRequest) => {
 
     // 取得したタイプ一覧を、中間テーブル(PokemonType) に保存
     // createManyで複数のレコードをテーブルにINSERTする
+    // await prisma.pokemonType.createMany({
+    //   data: typeData.map((pokemonType: Type) => ({
+    //     pokemonId: Number(id),
+    //     typeId:  pokemonType.id
+    //   }))
+    // })
+
     await prisma.pokemonType.createMany({
-      data: typeData.map((pokemonType: Type) => ({
-        pokemonId: Number(id),
-        typeId:  pokemonType.id
-      }))
-    })
+  data: typeData.map((item: { id: number; name: string }) => ({
+    pokemonId: Number(id),
+    typeId: item.id
+  }))
+})
 
     return NextResponse.json({
       pokemonId: Number(id)
