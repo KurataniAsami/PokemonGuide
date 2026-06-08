@@ -1,6 +1,7 @@
 import { prisma } from "@/app/libs/prisma"
 import { NextRequest, NextResponse } from "next/server"
 import { PokemonList } from "@/app/types/pokemon"
+import { Type } from "@prisma/client"
 
 // 作成
 export type CreatePokemonRequestBody = {
@@ -103,14 +104,13 @@ export const POST = async (request: NextRequest) => {
         }
       }
     })
-    console.log("typeData:", typeData)
 
     // 取得したタイプ一覧を、中間テーブル(PokemonType) に保存
     // createManyで複数のレコードをテーブルにINSERTする
     await prisma.pokemonType.createMany({
-      data: typeData.map((type) => ({
+      data: typeData.map((pokemonType: Type) => ({
         pokemonId: Number(id),
-        typeId: type.id
+        typeId:  pokemonType.id
       }))
     })
 
