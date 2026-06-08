@@ -16,14 +16,9 @@ export const SidebarData = [
     icon: <LaptopChromebookIcon/>,
     link: "/pokemonType"
   },
-  {
-    title: "図鑑作成",
-    icon: <LaptopChromebookIcon/>,
-    link: "/create"
-  },
-  {
-    title: "お気に入り",
-    icon: <LaptopChromebookIcon/>,
-    link: "/favorite"
-  },
+  // {
+  //   title: "図鑑作成",
+  //   icon: <LaptopChromebookIcon/>,
+  //   link: "/create"
+  // },
 ]

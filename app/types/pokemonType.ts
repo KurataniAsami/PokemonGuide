@@ -1,16 +1,16 @@
 export type PokemonType =
-  | "ノーマル"
-  | "ほのお"
-  | "みず"
-  | "でんき"
-  | "くさ"
-  | "どく"
-  | "じめん"
-  | "ひこう"
-  | "エスパー"
-  | "むし"
-  | "いわ"
-  | "ゴースト"
+  | "normal"
+  | "fire"
+  | "water"
+  | "electric"
+  | "grass"
+  | "poison"
+  | "ground"
+  | "flying"
+  | "psychic"
+  | "bug"
+  | "rock"
+  | "ghost"
 
   // PokemonTypeに入れていい文字列を指定する型
   // 日本語をキーにできる

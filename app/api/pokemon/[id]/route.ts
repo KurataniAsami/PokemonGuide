@@ -11,7 +11,6 @@ export const GET = async (
   { params }:{ params: Promise<{ id: string }>},
 ) => {
   const { id } = await params
-  console.log(await prisma.pokemon.findMany())
 
   try {
     // findUniqueは1件

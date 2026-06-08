@@ -40,7 +40,7 @@ export default function PokemonDetailPage() {
   if(error) return <p>エラーが発生しました</p>
 
   return (
-    <div className="flex justify-center mt-5">
+    <div className="flex justify-center my-5">
 
       <Card
         key={pokemon.id}
@@ -72,9 +72,10 @@ export default function PokemonDetailPage() {
                 const type = t.type.name as PokemonType
 
                 return (
-                  <p>タイプ： 
+                  // keyはreturnの直後につける
+                  <p key={t.type.id}>
+                    タイプ： 
                     <Button
-                      key={t.type.id}
                       variant="contained"
                       disabled
                       sx={{

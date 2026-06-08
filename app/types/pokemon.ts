@@ -44,3 +44,8 @@ export type PokemonShowResponse = {
 export type TypeIndexResponse = {
   pokemontypes : PokemonList[]   // pokemontypesはAPIの方とあわせる
 }
+
+// タイプ詳細
+export type TypeShowResponse = {
+  pokemon: Pokemon[]
+}

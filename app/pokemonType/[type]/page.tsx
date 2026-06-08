@@ -41,72 +41,72 @@ export default function TypeDetail() {
 
   return (
     <div className="flex justify-center mt-5">
-    <div className="grid grid-cols-4 gap-6 mx-6">
-      <Box
-        sx={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          width: '640px',
-          gap: '20px'
-        }}
-      >
-
-      {pokemons.map((pokemon) => (
-        <Card
-          key={pokemon.id}
-          variant="outlined"
+      <div className="grid grid-cols-4 gap-6 mx-6">
+        <Box
           sx={{
-            maxWidth: 300,
-            backgroundColor: '#ffffff',
-            marginTop: '20px'
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            width: '640px',
+            gap: '20px'
           }}
         >
-          <CardContent>
-            <Link href={`/data-list/${pokemon.id}`}>
-              <div className="mb-5">
-                <div className="">No:{pokemon.id}</div>
-                <Image
-                  src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
-                  alt={pokemon.name}
-                  width={120}
-                  height={120}
-                  className="mx-auto"
-                />
 
-                <p className="text-center">{pokemon.name}</p>
-              </div>
+        {pokemons.map((pokemon) => (
+          <Card
+            key={pokemon.id}
+            variant="outlined"
+            sx={{
+              maxWidth: 300,
+              backgroundColor: '#ffffff',
+              marginTop: '20px'
+            }}
+          >
+            <CardContent>
+              <Link href={`/data-list/${pokemon.id}`}>
+                <div className="mb-5">
+                  <div className="">No:{pokemon.id}</div>
+                  <Image
+                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
+                    alt={pokemon.name}
+                    width={120}
+                    height={120}
+                    className="mx-auto"
+                  />
 
-              <div className="flex justify-center gap-3">
-                {pokemon.types.map((t) => {
-                  const type = t.type.name as PokemonType
+                  <p className="text-center">{pokemon.name}</p>
+                </div>
 
-                  return (
-                    <Button
-                      key={t.type.id}
-                      variant="contained"
-                      disabled
-                      sx={{
-                        backgroundColor: typeMeta[type].color,
-                        color: '#00001C',
+                <div className="flex justify-center gap-3">
+                  {pokemon.types.map((t) => {
+                    const type = t.type.name as PokemonType
 
-                        '&.Mui-disabled': {
+                    return (
+                      <Button
+                        key={t.type.id}
+                        variant="contained"
+                        disabled
+                        sx={{
                           backgroundColor: typeMeta[type].color,
                           color: '#00001C',
-                        },
-                      }}
-                    >
-                        {typeMeta[type].label}
-                    </Button>
-                  )
-                })}
 
-              </div>
-            </Link>
-          </CardContent>
-        </Card>
-        ))}
-      </Box>
+                          '&.Mui-disabled': {
+                            backgroundColor: typeMeta[type].color,
+                            color: '#00001C',
+                          },
+                        }}
+                      >
+                          {typeMeta[type].label}
+                      </Button>
+                    )
+                  })}
+
+                </div>
+              </Link>
+            </CardContent>
+          </Card>
+          ))}
+        </Box>
+      </div>
     </div>
-  </div>
   )
 }

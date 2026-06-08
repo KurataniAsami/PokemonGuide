@@ -1,8 +1,11 @@
 'use client'
 import { useState } from "react"
 import { CreatePokemonRequestBody } from "../api/pokemon/route"
+import { useRouter } from 'next/navigation'
+import { typeOptions } from "../constans/typeOption"
 
 export default function CreatePage() {
+  const router = useRouter()
   const [id, setId] = useState('')
   const [pokemonName, setPokemonName] = useState('')
   const [type, setType] = useState<string[]>([])
@@ -31,8 +34,13 @@ export default function CreatePage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
       })
+      
+      if(!res.ok) {
+        throw new Error('登録に失敗しました')
+      }
 
-      const data = await res.json()
+      router.push(`/data-list/${id}`)
+
     } catch(error) {
       setError(error instanceof Error ? error.message: 'ポケモンを登録することができませんでした')
     } finally {
@@ -40,20 +48,20 @@ export default function CreatePage() {
     }
   }
 
-  const typeOptions = [
-  "ノーマル",
-  "ほのお",
-  "みず",
-  "でんき",
-  "くさ",
-  "どく",
-  "じめん",
-  "ひこう",
-  "エスパー",
-  "むし",
-  "いわ",
-  "ゴースト",
-]
+//   const typeOptions = [
+//   "ノーマル",
+//   "ほのお",
+//   "みず",
+//   "でんき",
+//   "くさ",
+//   "どく",
+//   "じめん",
+//   "ひこう",
+//   "エスパー",
+//   "むし",
+//   "いわ",
+//   "ゴースト",
+// ]
 
   return (
     <div className="mt-5 px-5">
@@ -105,14 +113,14 @@ export default function CreatePage() {
 
           <div className="flex flex-col mt-3">
             <label className="w-24 mb-1">データ</label>
-            <input
+            <textarea
               value={detail}
               onChange={(e) => setDetail(e.target.value)}
               placeholder="ポケモンのデータを入力"
-              className="border border-white w-72 text-base caret-white focus:outline focus:outline-white"
+              className="border border-white w-72 h-24 text-base caret-white focus:outline focus:outline-white"
               style={{
                 caretColor: "white",
-                color: "white"
+                color: "white",
               }}
             />
           </div>
@@ -120,21 +128,22 @@ export default function CreatePage() {
           <fieldset className="mt-3">
             <legend>タイプ</legend>
 
-            {typeOptions.map((typeName) => (
-              <label key={typeName} className="mr-2">
+            {/* typeotionsに入れたキーをセット, valueは英語 */}
+            {typeOptions.map((typeOption) => (
+              <label key={typeOption.value} className="mr-2">
                 <input
                   type="checkbox"
-                  value={typeName}
+                  value={typeOption.value}
                   className="mr-2"
                   onChange={(e) => {
                     if(e.target.checked) {
-                      setType((prev) => [...type, typeName])
+                      setType((prev) => [...type, typeOption.value])
                     } else {
-                      setType((prev) => type.filter((t) => t !== typeName))
+                      setType((prev) => type.filter((t) => t !== typeOption.value))
                     }
                   }}
                 />
-                {typeName}
+                {typeOption.label}
               </label>
             ))}
           </fieldset>

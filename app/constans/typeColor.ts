@@ -5,51 +5,51 @@ export const typeMeta: Record<PokemonType, {
   color: string
   label: string
 }> = {
-  ほのお: {
+  fire: {
     color: "#F08030",
     label: "ほのお",
   },
-  みず: {
+  water: {
     color: "#6890F0",
     label: "みず",
   },
-  くさ: {
+  grass: {
     color: "#78C850",
     label: "くさ",
   },
-  でんき: {
+  electric: {
     color: "#F8D030",
     label: "でんき",
   },
-  ノーマル: {
+  normal: {
     color: "#A8A878",
     label: "ノーマル",
   },
-  どく: {
+  poison: {
     color: "#A040A0",
     label: "どく",
   },
-  じめん: {
+  ground: {
     color: "#E0C068",
     label: "じめん",
   },
-  ひこう: {
+  flying: {
     color: "#A7D8FF",
     label: "ひこう",
   },
-  エスパー: {
+  psychic: {
     color: "#F85888",
     label: "エスパー",
   },
-  むし: {
+  bug: {
     color: "#A8B820",
     label: "むし",
   },
-  いわ: {
+  rock: {
     color: "#B8A038",
     label: "いわ",
   },
-  ゴースト: {
+  ghost: {
     color: "#705898",
     label: "ゴースト",
   },

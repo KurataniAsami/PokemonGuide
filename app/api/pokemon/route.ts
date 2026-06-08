@@ -31,6 +31,7 @@ export const GET = async (request: NextRequest) => {
     // findManyで複数取得するから結果はpokemon[]
     // pokemon[]はデータの型
 
+    // ページネーションなし
     // const pokemons = await prisma.pokemon.findMany({
     //   include: {   // 関連テーブルも取得
     //     types: {   // types 中間テーブル取得
