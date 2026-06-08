@@ -1,7 +1,7 @@
 // 一覧
 'use client'
 import { useEffect, useState } from "react"
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import Box from '@mui/material/Box'
 
@@ -11,24 +11,22 @@ import { PokemonIndexResponse } from "../types/pokemon";
 import PokemonCard from "../components/PokemonCard";
 
 export default function DataListPage() {
-
-  // ページネーション
-  // searchParamsとはクエリパラメータ（?の後ろの値） を取得するもの
-  // data-list?page=2なら2ページ目を取得
   const router = useRouter();
-  const searchParams = useSearchParams();
   
   // トータルのページ数を保存するstate
   const [totalPages, setTotalPages] = useState(1);
 
-  // const [pokemonLists, setPokemonLists] = useState<PokemonResponse[]>([])
+  const [currentPage, setCurrentPage] = useState(1)
+
   // "pokemons"は PokemonResponseのpokemonsプロパティからきてる（配列）
   // APIが返すデータをstateに入れる
   const [pokemonLists, setPokemonLists] = useState<PokemonList[]>([])
   const [loading, setLoading] = useState(true)
 
-  // パラメータが取得できたらそのページを表示、取得しなければ1ページ目
-  const currentPage = Number(searchParams.get('page')) || 1;
+  useEffect(() => {
+  const page = Number(new URLSearchParams(window.location.search).get("page") ?? 1)
+  setCurrentPage(page)
+}, [])
 
   // レンダリングのたびにfetchを走らせないためにuseEffectを使用
   // APIにcurrentPageを送ったらdata fetch
@@ -56,8 +54,9 @@ export default function DataListPage() {
   }
 
   // 指定したページ番号のURLへ移動する
-  const handlePageChange = (page: Number) => {
-    router.push(`/data-list?page=${page}`);
+  const handlePageChange = (page: number) => {
+    router.push(`/data-list?page=${page}`)
+    setCurrentPage(page)
   }
   
   if(loading) return <p className="text-white">loading...</p>
@@ -77,7 +76,6 @@ export default function DataListPage() {
             pokemon={pokemon}
           />
         ))}
-      
       </Box>
 
       {totalPages > 1 && (

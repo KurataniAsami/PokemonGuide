@@ -5,6 +5,7 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
+  AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import SearchIcon from '@mui/icons-material/Search';
@@ -29,15 +30,21 @@ export default function SearchModal() {
 
         <AlertDialogContent>
           <AlertDialogHeader>
+            <AlertDialogTitle>
             <div className="flex items-center gap-2 cursor-pointer">
               <SearchIcon/>
-              ポケモンを探す
+              <span>ポケモンを探す</span>
             </div>
-            <AlertDialogDescription>
-              {/* isModalでmodalの場合だけスタイルを変える */}
-              <SearchAndNavigation isModal />
+            </AlertDialogTitle>
+            <AlertDialogDescription className="ml-7">
+              名前で検索できます
             </AlertDialogDescription>
           </AlertDialogHeader>
+
+          <div>
+            {/* isModalでmodalの場合だけスタイルを変える */}
+              <SearchAndNavigation isModal />
+          </div>
 
           <AlertDialogFooter className="bg-white">
             <AlertDialogCancel className="bg-white border-none">

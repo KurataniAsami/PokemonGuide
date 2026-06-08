@@ -1,30 +1,33 @@
 'use client'
 
-import { useSearchParams, useRouter } from "next/navigation"
-import { useState } from "react";
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react";
 import SidebarIcon from "./SidebarIcon";
 
 // モーダルだけ別のcssにするのでpropsで渡す
 type ModalProps = {
   isModal?: boolean
+  initialValue?: string
 }
 
 export default function SearchAndNavigation({
     isModal = false,
+    initialValue = "",
   }: ModalProps) {
   // ルーターと検索パラメーターを使用
   const router = useRouter();
 
-  // 検索パラメータ
-  const searchParams = useSearchParams();
-
   // 検索キーワードを管理
-  const [searchTerm, setSearchTerm] = useState(searchParams.get("q") || "");
+  const [searchTerm, setSearchTerm] = useState(initialValue);
+
+   useEffect(() => {
+    setSearchTerm(initialValue)
+  }, [initialValue])
 
   // 検索
-  const handleSearch = async (e: React.FormEvent) => {
+  const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();  // フォームの送信してもリロードされない
-    router.push(`/search?q=${encodeURIComponent(searchTerm)}`)
+    router.push(`/search?q=${(searchTerm)}`)
   }
 
   // 検索クリア
