@@ -1,7 +1,6 @@
 import { prisma } from "@/app/libs/prisma"
 import { NextRequest, NextResponse } from "next/server"
 import { PokemonList } from "@/app/types/pokemon"
-import { Type } from "@prisma/client"
 
 // 作成
 export type CreatePokemonRequestBody = {
