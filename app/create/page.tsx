@@ -48,21 +48,6 @@ export default function CreatePage() {
     }
   }
 
-//   const typeOptions = [
-//   "ノーマル",
-//   "ほのお",
-//   "みず",
-//   "でんき",
-//   "くさ",
-//   "どく",
-//   "じめん",
-//   "ひこう",
-//   "エスパー",
-//   "むし",
-//   "いわ",
-//   "ゴースト",
-// ]
-
   return (
     <div className="mt-5 px-5">
       <p className="text-center">図鑑登録</p>
@@ -75,7 +60,7 @@ export default function CreatePage() {
               value={pokemonName}
               onChange={(e) => setPokemonName(e.target.value)}
               placeholder="ポケモンの名前を入力してください"
-              className="border border-white w-72 text-base caret-white focus:outline focus:outline-white"
+              className="border border-white w-72 text-base caret-white focus:outline focus:outline-white p-1"
               style={{
                 caretColor: "white",
                 color: "white"
@@ -89,7 +74,7 @@ export default function CreatePage() {
               value={id}
               onChange={(e) => setId(e.target.value)}
               placeholder="IDを入力してください"
-              className="border border-white w-72 text-base caret-white focus:outline focus:outline-white"
+              className="border border-white w-72 text-base caret-white focus:outline focus:outline-white p-1"
               style={{
                 caretColor: "white",
                 color: "white"
@@ -103,7 +88,7 @@ export default function CreatePage() {
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
               placeholder="おもさを入力"
-              className="border border-white w-72 text-base caret-white focus:outline focus:outline-white"
+              className="border border-white w-72 text-base caret-white focus:outline focus:outline-white p-1"
               style={{
                 caretColor: "white",
                 color: "white"
@@ -117,7 +102,7 @@ export default function CreatePage() {
               value={detail}
               onChange={(e) => setDetail(e.target.value)}
               placeholder="ポケモンのデータを入力"
-              className="border border-white w-72 h-24 text-base caret-white focus:outline focus:outline-white"
+              className="border border-white w-72 h-24 text-base caret-white focus:outline focus:outline-white p-1"
               style={{
                 caretColor: "white",
                 color: "white",
@@ -162,21 +147,16 @@ export default function CreatePage() {
             </span>
           </a>    
 
-          <div className="flex justify-center mt-4">
+          {/* <div className="flex justify-center mt-4">
             <button
               type="submit"
               className="text-blue-500 text-bold text-xl bg-white p-2 rounded"
             >
               登録
             </button>
-          </div>
+          </div> */}
         </form>
       </div>
     </div>
   )
 }
-
-
-
-
-// base-study

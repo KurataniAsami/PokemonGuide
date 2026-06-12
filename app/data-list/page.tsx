@@ -63,11 +63,13 @@ export default function DataListPage() {
   if(!pokemonLists) return <p>データがありません</p>
 
   return (
-    <div className="ml-8">
+    <div>
       <Box
         sx={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
+          gridTemplateColumns: 'repeat(3, 250px)',
+          gap: 2,
+          justifyContent: 'center'
         }}
       >
         {pokemonLists.map((pokemon) => (
@@ -79,17 +81,17 @@ export default function DataListPage() {
       </Box>
 
       {totalPages > 1 && (
-        <div className="flex justify-center w-full max-w-5xl mt-6 space-x-2">
+        <div className="relative w-full max-w-5xl mt-6 mx-auto">
           {currentPage > 1 && (
             <button
               onClick={() => handlePageChange(currentPage - 1)}
-              className="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400"
+              className="text-black text-sm w-12 h-12  hover:bg-gray-400 absolute left-0 bg-gray-300 px-4 py-2 rounded"
             >
               前
             </button>
           )}
 
-          <div>
+          <div className="flex justify-center items-center gap-2">
             {generatePagiNation().map((page, index) => (
               <button
                 key={index}
@@ -109,7 +111,7 @@ export default function DataListPage() {
           {currentPage < totalPages && (
             <button
               onClick={() => handlePageChange(currentPage + 1)}
-              className="bg-gray-300 text-black px-4 py-2 rounded text-sm w-12 h-12  hover:bg-gray-400"
+              className=" text-black text-sm w-12 h-12  hover:bg-gray-400 absolute right-0 bg-gray-300 px-4 py-2 rounded"
             >
               次
             </button>
