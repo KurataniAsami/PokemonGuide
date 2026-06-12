@@ -58,15 +58,15 @@ export default function SearchAndNavigation({
               // modalで適用させたい方が : より前
               className={`
                 px-3 py-2 border border-gray-400 rounded-md
-                focus:outline-none focus:ring-2   w-[250px]
+                focus:outline-none focus:ring-2 flex w-[250px]
                 ${isModal ? "text-black focus:ring-black" : "text-white focus:ring-white"}
               `}
             />
             <button
               type="submit"
               className={`
-                  px-4 py-2 rounded hover:bg-gray-300 ml-3  text-black
-                ${isModal ? "bg-gray-200 mt-3" : "bg-white mt-2"}
+                  px-4 py-2 rounded hover:bg-gray-300 ml-3  text-black mt-4 
+                ${isModal ? "bg-gray-200 ml-22" : "bg-white ml-20"}
               `}
             >
               検索

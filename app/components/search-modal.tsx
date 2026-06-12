@@ -30,13 +30,13 @@ export default function SearchModal() {
 
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>
-            <div className="flex items-center gap-2 cursor-pointer">
+            <AlertDialogTitle className="mx-auto">
+            <div className="flex items-center justify-center gap-2 cursor-pointer">
               <SearchIcon/>
               <span>ポケモンを探す</span>
             </div>
             </AlertDialogTitle>
-            <AlertDialogDescription className="ml-7">
+            <AlertDialogDescription className="mx-auto">
               名前で検索できます
             </AlertDialogDescription>
           </AlertDialogHeader>
